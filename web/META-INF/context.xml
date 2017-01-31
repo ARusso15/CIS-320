@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="jdbc/cis320"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxTotal="50"
+              maxWaitMillis="-1"
+              username="cis320A"
+              password="NewYorkClippers"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://cis320a.cvxqk9gxid4o.us-west-2.rds.amazonaws.com:3306/cis320A"
+              maxActive="15"
+              maxIdle="3"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+    />
+    <ResourceLink name="jdbc/cis320"
+                  global="jdbc/cis320"
+                  type="javax.sql.DataSource"/>
+</Context>
