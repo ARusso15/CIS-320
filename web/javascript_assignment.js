@@ -24,7 +24,7 @@ function visibility() {
     }
     else {
         $("#paragraphToHide").hide();
-}
+    }
 }
 
 var formButton1 = $('#button3');
@@ -63,3 +63,5 @@ function jsonFunction() {
 
 var formButton5 = $('#button5');
 formButton5.on("click", jsonFunction);
+
+//Test
