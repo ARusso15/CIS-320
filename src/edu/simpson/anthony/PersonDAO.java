@@ -81,5 +81,44 @@ public class PersonDAO {
         // Done! Return the results
         return list;
     }
+    public static void editPerson(Person person) {
+        log.log(Level.SEVERE, "Edit Person");
 
+        // Declare our variables
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        // Databases are unreliable. Use some exception handling
+        try {
+            // Get our database connection
+            conn = DBHelper.getConnection();
+
+            // This is a string that is our SQL query.
+            String sql = "insert INTO person (first, last, phone, email, birthday) values (?,?,?,?,?)";
+
+            // Create an object with all the info about our SQL statement to run.
+            stmt = conn.prepareStatement(sql);
+
+            // If you had parameters, they would be set wit something like:
+            stmt.setString(1, person.getFirst());
+            stmt.setString(2, person.getLast());
+            stmt.setString(3, person.getPhone());
+            stmt.setString(4, person.getEmail());
+            stmt.setString(5, person.getBirthday());
+
+            stmt.executeUpdate();
+
+        }
+            catch (SQLException se) {
+                log.log(Level.SEVERE, "SQL Error", se );
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e );
+            } finally {
+                // Ok, close our result set, statement, and connection
+                try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+                try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+            }
+
+    }
 }
+

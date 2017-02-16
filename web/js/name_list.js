@@ -98,7 +98,7 @@ function validateFunction() {
     var email_check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     var phone = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
     var birthday_check = /^[0-9]{4}-[0-9]{2}-[0-9]{2}/;
-
+    var validForm = true;
     // Test the regular expression to see if there is a match
     if (name.test(firstName)) {
         console.log("Ok");
@@ -117,6 +117,7 @@ function validateFunction() {
         // Set the icon for the form field
         $('#firstNameGlyph').removeClass("glyphicon-remove");
         $('#firstNameGlyph').addClass("glyphicon-remove");
+        validForm = false;
 
         $('firstNameStatus').val("(error)");
     }
@@ -137,7 +138,7 @@ function validateFunction() {
         // Set the icon for the form field
         $('#lastNameGlyph').removeClass("glyphicon-remove");
         $('#lastNameGlyph').addClass("glyphicon-remove");
-
+        validForm = false;
         $('lastNameStatus').val("(error)");
     }
     if (email_check.test(email)) {
@@ -156,7 +157,7 @@ function validateFunction() {
         // Set the icon for the form field
         $('#emailGlyph').removeClass("glyphicon-remove");
         $('#emailGlyph').addClass("glyphicon-remove");
-
+        validForm = false
         $('emailStatus').val("(error)");
     }
     if (phone.test(phone_number)) {
@@ -175,7 +176,7 @@ function validateFunction() {
         // Set the icon for the form field
         $('#phone_numberGlyph').removeClass("glyphicon-remove");
         $('#phone_numberGlyph').addClass("glyphicon-remove");
-
+        validForm = false
         $('phoneStatus').val("(error)");
     }
     if (birthday_check.test(birthday)) {
@@ -188,15 +189,45 @@ function validateFunction() {
         // Put in the field used by screen readers
         $('birthdayStatus').val("(success)");
     } else {
-        console.log("Bad"+birthday);
+        console.log("Bad" + birthday);
         $('#birthdayDiv').removeClass("has-error");
         $('#birthdayDiv').addClass("has-error");
         // Set the icon for the form field
         $('#birthdayGlyphGlyph').removeClass("glyphicon-remove");
         $('#birthdayGlyph').addClass("glyphicon-remove");
-
+        validForm = false
         $('firstNameStatus').val("(error)");
-}}
+
+    }
+    if (validForm) {
+        console.log("valid")
+        updateTable()
+        var url = "/api/name_list_edit";
+        var firstName = $("#firstName").val();
+        var lastName = $("#lastName").val();
+        var email = $("#email").val();
+        var phone_number = $("#phone_number").val();
+        var birthday = $("#birthday").val();
+        var dataToServer = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone_number: phone_number,
+            birthday: birthday
+        };
+        $('#myModal').modal('hide');
+
+        $.post(url, dataToServer, function (dataFromServer) {
+            console.log("Finished calling servlet.");
+            console.log(dataFromServer);
+            $("#datatable tbody").empty();
+            updateTable();
+
+
+        });
+    }
+}
+
 
 var saveChangesButton = $('#saveChanges');
 saveChangesButton.on("click", saveChanges);

@@ -1,3 +1,4 @@
 .idea/
 out/
-
+web/META-INF/contextA.xml
+web/META-INF/
