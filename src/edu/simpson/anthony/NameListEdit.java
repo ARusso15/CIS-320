@@ -1,15 +1,35 @@
 package edu.simpson.anthony;
 
-
-import com.google.gson.Gson;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class NameListEdit extends HttpServlet {
 
+    // This will hold our compiled regular expression
+    // You'll need one of these for each field
+    // Name it according to the actual field name. Do not use "fieldname"
+    private Pattern nameValidationPattern;
+    private Pattern emailValidationPattern;
+    private Pattern phoneValidationPattern;
+    private Pattern birthdayValidationPattern;
+
+    /**
+     * Our constructor
+     */
+    public NameListEdit() {
+        // --- Compile and set up all the regular expression patterns here ---
+        nameValidationPattern = Pattern.compile("^[A-Za-z]{1,20}$");
+        emailValidationPattern = Pattern.compile("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$");
+        phoneValidationPattern = Pattern.compile("^[0-9]{3}-[0-9]{3}-[0-9]{4}$");
+        birthdayValidationPattern = Pattern.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2}");
+
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // You can output in any format, text/JSON, text/HTML, etc. We'll keep it simple
@@ -42,6 +62,38 @@ public class NameListEdit extends HttpServlet {
 
         PersonDAO.editPerson(person);
 
+
+        // Now create matcher object.
+        Matcher n = nameValidationPattern.matcher(firstName);
+        if (n.find()) {
+            out.println("Passed validation");
+        } else {
+            out.println("Did not pass validation");
+        }
+        Matcher ln = nameValidationPattern.matcher(lastName);
+        if (ln.find()) {
+            out.println("Passed validation");
+        } else {
+            out.println("Did not pass validation");
+        }
+        Matcher e = emailValidationPattern.matcher(email);
+        if (e.find()) {
+            out.println("Passed validation");
+        } else {
+            out.println("Did not pass validation");
+        }
+        Matcher p = phoneValidationPattern.matcher(phone_number);
+        if (p.find()) {
+            out.println("Passed validation");
+        } else {
+            out.println("Did not pass validation");
+        }
+        Matcher b = birthdayValidationPattern.matcher(birthday);
+        if (b.find()) {
+            out.println("Passed validation");
+        } else {
+            out.println("Did not pass validation");
+        }
     }
 }
 

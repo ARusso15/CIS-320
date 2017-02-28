@@ -94,11 +94,11 @@ function validateFunction() {
     var birthday = $('#birthday').val();
 
     // Create the regular expression
-    var name = /^[A-Za-z]{1,20}$/;
-    var email_check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    var phone = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
-    var birthday_check = /^[0-9]{4}-[0-9]{2}-[0-9]{2}/;
-    var validForm = true;
+        var name = /^[A-Za-z]{1,20}$/;
+        var email_check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var phone = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+        var birthday_check = /^[0-9]{4}-[0-9]{2}-[0-9]{2}/;
+        var validForm = true;
     // Test the regular expression to see if there is a match
     if (name.test(firstName)) {
         console.log("Ok");
