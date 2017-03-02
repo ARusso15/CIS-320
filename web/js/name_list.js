@@ -21,11 +21,6 @@ function updateTable() {
                     +json_result[i].email+"</td><td>"
                     +json_result[i].birthday+"</td><td>"
                     +"<button type='button' name='delete' class='deleteButton btn' value='" + json_result[i].id + "'>Delete</button></td></tr>");
-
-
-                console.log(json_result[i].firstName);
-
-
             }
             var buttons = $(".deleteButton");
             buttons.on("click", deleteItem);
@@ -38,11 +33,11 @@ function updateTable() {
 updateTable();
 
 function deleteItem(e) {
-    console.debug("Delete");
-    console.debug(e.target.value);
+
+
     updateTable()
     var url = "/api/name_list_delete";
-    var id = $("#id").val();
+    var id = e.target.value;
     var dataToServer = {id: id};
 
     $.post(url, dataToServer, function (dataFromServer) {
@@ -51,6 +46,8 @@ function deleteItem(e) {
         $("#datatable tbody").empty();
         updateTable();
         })
+    console.debug("Delete");
+    console.debug(e.target.value);
 }
 
 
