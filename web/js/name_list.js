@@ -19,16 +19,40 @@ function updateTable() {
                     +json_result[i].last+"</td><td>"
                     +json_result[i].phone+"</td><td>"
                     +json_result[i].email+"</td><td>"
-                    +json_result[i].birthday+"</td></tr>");
+                    +json_result[i].birthday+"</td><td>"
+                    +"<button type='button' name='delete' class='deleteButton btn' value='" + json_result[i].id + "'>Delete</button></td></tr>");
+
+
                 console.log(json_result[i].firstName);
+
+
             }
-            console.log("Done");
+            var buttons = $(".deleteButton");
+            buttons.on("click", deleteItem);
+                console.log("Done");
         }
     );
 }
 
 // Call your code.
 updateTable();
+
+function deleteItem(e) {
+    console.debug("Delete");
+    console.debug(e.target.value);
+    updateTable()
+    var url = "/api/name_list_delete";
+    var id = $("#id").val();
+    var dataToServer = {id: id};
+
+    $.post(url, dataToServer, function (dataFromServer) {
+        console.log("Finished calling servlet.");
+        console.log(dataFromServer);
+        $("#datatable tbody").empty();
+        updateTable();
+        })
+}
+
 
 // There's a button in the form with the ID "addItem"
 // Associate the function showDialogAdd with it.
@@ -214,6 +238,7 @@ function validateFunction() {
             email: email,
             phone_number: phone_number,
             birthday: birthday
+
         };
         $('#myModal').modal('hide');
 
@@ -232,3 +257,8 @@ function validateFunction() {
 var saveChangesButton = $('#saveChanges');
 saveChangesButton.on("click", saveChanges);
 saveChangesButton.on("click", validateFunction);
+
+
+
+
+
