@@ -20,17 +20,82 @@ function updateTable() {
                     +json_result[i].phone+"</td><td>"
                     +json_result[i].email+"</td><td>"
                     +json_result[i].birthday+"</td><td>"
-                    +"<button type='button' name='delete' class='deleteButton btn' value='" + json_result[i].id + "'>Delete</button></td></tr>");
+                    +"<button type='button' name='delete' class='deleteButton btn' value='" + json_result[i].id + "'>Delete</button></td><td>"
+                    +"<button type='button' name='edit' class='editButton btn' value='" + json_result[i].id + "'>Edit</button></td></tr>");
             }
             var buttons = $(".deleteButton");
-            buttons.on("click", deleteItem);
-                console.log("Done");
+        buttons.on("click", deleteItem);
+        console.log("Deleted");
+            var buttons = $(".editButton");
+        buttons.on("click", editItem);
+        console.log("Edited");
         }
     );
 }
 
 // Call your code.
 updateTable();
+
+
+function editItem(e) {
+    console.debug("Edit");
+    console.debug(e.target.value);
+
+    // Print that we got here
+    console.log("Opening edit item dialog");
+    // Grab the id from the event
+    var id = e.target.value;
+
+// This next line is fun.
+// "e" is the event of the mouse click
+// "e.target" is what the user clicked on. The button in this case.
+// "e.target.parentNode" is the node that holds the button. In this case, the table cell.
+// "e.target.parentNode.parentNode" is the parent of the table cell. In this case, the table row.
+// "e.target.parentNode.parentNode.querySelectorAll("td")" gets an array of all matching table cells in the row
+// "e.target.parentNode.parentNode.querySelectorAll("td")[0]" is the first cell. (You can grab cells 0, 1, 2, etc.)
+// "e.target.parentNode.parentNode.querySelectorAll("td")[0].innerHTML" is content of that cell. Like "Sam" for example.
+// How did I find this long chain? Just by setting a breakpoint and using the interactive shell in my browser.
+
+    var firstName = e.target.parentNode.parentNode.querySelectorAll("td")[1].innerHTML;
+    var lastName = e.target.parentNode.parentNode.querySelectorAll("td")[2].innerHTML;
+    var phone_number = e.target.parentNode.parentNode.querySelectorAll("td")[3].innerHTML;
+    var email = e.target.parentNode.parentNode.querySelectorAll("td")[4].innerHTML;
+    var birthday = e.target.parentNode.parentNode.querySelectorAll("td")[5].innerHTML;
+
+
+    // Clear out the values in the form.
+    // Otherwise we'll keep values from when we last
+    // opened or hit edit.
+    // I'm getting it started, you can finish.
+    $('#id').val(id);
+    $('#firstName').val(firstName);
+    $('#lastName').val(lastName);
+    $('#phone_number').val(phone_number);
+    $('#email').val(email);
+    $('#birthday').val(birthday);
+    $('#firstNameDiv').removeClass("has-success");
+    $('#firstNameGlyph').removeClass("glyphicon-ok");
+    $('#firstNameDiv').removeClass("has-error");
+    $('#firstNameGlyph').removeClass("glyphicon-remove");
+    $('#lastNameDiv').removeClass("has-success");
+    $('#lastNameGlyph').removeClass("glyphicon-ok");
+    $('#lastNameDiv').removeClass("has-error");
+    $('#lastNameGlyph').removeClass("glyphicon-remove");
+    $('#emailDiv').removeClass("has-success");
+    $('#emailGlyph').removeClass("glyphicon-ok");
+    $('#emailDiv').removeClass("has-error");
+    $('#emailGlyph').removeClass("glyphicon-remove");
+    $('#phone_numberDiv').removeClass("has-success");
+    $('#phone_numberGlyph').removeClass("glyphicon-ok");
+    $('#phone_numberDiv').removeClass("has-error");
+    $('#phone_numberGlyph').removeClass("glyphicon-remove");
+    $('#birthdayDiv').removeClass("has-success");
+    $('#birthdayGlyph').removeClass("glyphicon-ok");
+    $('#birthdayDiv').removeClass("has-error");
+    $('#birthdayGlyph').removeClass("glyphicon-remove");
+    // Show the hidden dialog
+    $('#myModal').modal('show');
+}
 
 function deleteItem(e) {
 
@@ -224,12 +289,14 @@ function validateFunction() {
         console.log("valid")
         updateTable()
         var url = "/api/name_list_edit";
+        var id = $("#id").val();
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
         var email = $("#email").val();
         var phone_number = $("#phone_number").val();
         var birthday = $("#birthday").val();
         var dataToServer = {
+            id: id,
             firstName: firstName,
             lastName: lastName,
             email: email,

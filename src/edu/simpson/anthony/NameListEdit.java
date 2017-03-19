@@ -38,6 +38,7 @@ public class NameListEdit extends HttpServlet {
         out.println("Hello");
 
         // Grab the data we got via a parameter
+        String id = request.getParameter("id");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
@@ -46,6 +47,7 @@ public class NameListEdit extends HttpServlet {
 
 
         // Just print the data out to confirm we got it.
+        out.println("id='" + id + "'");
         out.println("First Name='" + firstName + "'");
         out.println("Last Name='" + lastName + "'");
         out.println("Email='" + email + "'");
@@ -60,7 +62,7 @@ public class NameListEdit extends HttpServlet {
         person.setBirthday(birthday);
 
 
-        PersonDAO.editPerson(person);
+        boolean valid = true;
 
 
         // Now create matcher object.
@@ -69,30 +71,44 @@ public class NameListEdit extends HttpServlet {
             out.println("Passed validation");
         } else {
             out.println("Did not pass validation");
+            valid = false;
         }
         Matcher ln = nameValidationPattern.matcher(lastName);
         if (ln.find()) {
             out.println("Passed validation");
         } else {
             out.println("Did not pass validation");
+            valid = false;
         }
         Matcher e = emailValidationPattern.matcher(email);
         if (e.find()) {
             out.println("Passed validation");
         } else {
             out.println("Did not pass validation");
+            valid = false;
         }
         Matcher p = phoneValidationPattern.matcher(phone_number);
         if (p.find()) {
             out.println("Passed validation");
         } else {
             out.println("Did not pass validation");
+            valid = false;
         }
         Matcher b = birthdayValidationPattern.matcher(birthday);
         if (b.find()) {
             out.println("Passed validation");
         } else {
             out.println("Did not pass validation");
+            valid = false;
+        }
+
+        if (valid) {
+            if (id.length() == 0){
+                PersonDAO.editPerson(person);
+            }
+            else {
+                PersonDAO.updatePerson(person);
+            }
         }
     }
 }
