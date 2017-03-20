@@ -81,8 +81,8 @@ public class PersonDAO {
         // Done! Return the results
         return list;
     }
-    public static void editPerson(Person person) {
-        log.log(Level.SEVERE, "Edit Person");
+    public static void addPerson(Person person) {
+        log.log(Level.SEVERE, "add Person");
 
         // Declare our variables
         Connection conn = null;
@@ -170,6 +170,8 @@ public class PersonDAO {
 
             // Create an object with all the info about our SQL statement to run.
             stmt = conn.prepareStatement(sql);
+            log.log(Level.SEVERE, sql);
+            log.log(Level.SEVERE, String.format("id: %d",person.getId()));
 
             // If you had parameters, they would be set wit something like:
             stmt.setString(1, person.getFirst());
@@ -177,6 +179,7 @@ public class PersonDAO {
             stmt.setString(3, person.getPhone());
             stmt.setString(4, person.getEmail());
             stmt.setString(5, person.getBirthday());
+            stmt.setInt(6, person.getId());
 
             stmt.executeUpdate();
 

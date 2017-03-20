@@ -55,6 +55,7 @@ public class NameListEdit extends HttpServlet {
         out.println("birthday='" + birthday + "'");
 
         Person person = new Person();
+        person.setId (Integer.parseInt(id));
         person.setFirst(firstName);
         person.setLast(lastName);
         person.setEmail(email);
@@ -104,10 +105,12 @@ public class NameListEdit extends HttpServlet {
 
         if (valid) {
             if (id.length() == 0){
-                PersonDAO.editPerson(person);
+                PersonDAO.addPerson(person);
+                out.println("add");
             }
             else {
                 PersonDAO.updatePerson(person);
+                out.println("update");
             }
         }
     }
