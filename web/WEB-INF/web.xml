@@ -33,4 +33,34 @@
         <url-pattern>/api/name_list_delete</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>edu.simpson.anthony.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/api/login_servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetLoginServlet</servlet-name>
+        <servlet-class>edu.simpson.anthony.GetLoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetLoginServlet</servlet-name>
+        <url-pattern>/api/get_login_servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>InvalidateSessionServlet</servlet-name>
+        <servlet-class>edu.simpson.anthony.InvalidateSessionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>InvalidateSessionServlet</servlet-name>
+        <url-pattern>/api/invalidate_session_servlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
